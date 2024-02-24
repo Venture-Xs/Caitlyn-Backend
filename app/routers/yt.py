@@ -1,13 +1,15 @@
 import os
 import json
+from pytube import YouTube
 from openai import OpenAI
 from dotenv import load_dotenv
 from youtube_transcript_api import YouTubeTranscriptApi
 
-
-yid = str(input("Enter YouTube video ID: "))
-def bot(yid, is_query = False , query = "", generateTest = False) :
+url = str(input("Enter YouTube video url: "))
+def bot(url, is_query = False , query = "", generateTest = False) :
     # Get transcript of YouTube video
+    yt_obj = YouTube(url)
+    yid = yt_obj.video_id
     try:
         tx = YouTubeTranscriptApi.get_transcript(video_id=str(yid), languages=['en', 'ru', 'ml'])
         transcript = ""
@@ -33,29 +35,29 @@ def bot(yid, is_query = False , query = "", generateTest = False) :
     elif generateTest:
         message = {
             "role": "user",
-            "content": f"Must return an array of JSON objects of the form: {{'questions': [{{'q1':'...','o1':'...',o2:'...','o3':'...',o4:'...','answer':'...'}},{{'q2':'...','o1':'...',o2:'...','o3':'...',o4:'...','answer':'...'}},...]}} The article is as follows: {transcript} generate a mcq test with 5 questions from this article"
+            "content": f'Must return an array of JSON objects of the form: {{"questions": [{{"q1":"...","o1":"...",o2:"...","o3":"...","o4":"...","answer":"..."}},{{"q2":"...","o1":"...",o2:"...","o3":"...",o4:"...","answer":"..."}},...]}} The article is as follows: {transcript} generate a mcq test with 5 questions from this article'
         } 
     else :
         message = {
             "role": "user",
-            "content": f"Must return an array of JSON objects of the form: {{'summary_of_section': 'summary', 'time_stamp': '...'}} The article is as follows: {transcript}"
+            "content": f'Must return an array of JSON objects of the form: {{"summary_of_section": "summary", "time_stamp": "..."}} The article is as follows: {transcript}'
         }
     messages.append(message)
     try:
         chat_completion = client.chat.completions.create(
             messages= messages,
-            model="gpt-4-0125-preview",
+            model="gpt-3.5-turbo",
         )
 
         reply = chat_completion.choices[0].message.content
-        print(reply)
         reply.replace("\'","\"")
         reply.replace("json","")
         reply = json.loads(reply)
+        print(reply)
         return reply
     except Exception as e:
         print("Error communicating with OpenAI:", e)
         return 0
 
-reply = bot(yid,generateTest=True)
+reply = bot(url)
 print(reply)
