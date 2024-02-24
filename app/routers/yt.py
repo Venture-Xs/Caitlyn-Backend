@@ -41,7 +41,7 @@ def bot(url, is_query = False , query = "", generateTest = False) :
     else :
         message = {
             "role": "user",
-            "content": f'Must return an array of JSON objects of the form: {{"summary_of_section": "summary", "time_stamp": "..."}} The article is as follows: {transcript}.Must provide time_stamp at all cost'
+            "content": f'Must return an array of JSON objects of the form: {{"title_of_section":"title",summary_of_section": "summary", "time_stamp": "..."}} The article is as follows: {transcript}.Must provide time_stamp at all cost'
         }
     messages.append(message)
     try:

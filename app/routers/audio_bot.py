@@ -1,8 +1,11 @@
-from fastapi import APIRouter, UploadFile, File, StreamingResponse
+from fastapi import APIRouter, UploadFile, File
+from fastapi.responses import StreamingResponse
+from pydantic import BaseModel
 from ..abfunc.stt import stt
 from ..abfunc.ttsMal import tts_mal
 from ..abfunc.ttsoai import tts_en
-from yt import bot
+from .yt import bot
+
 class Audio_bot_req(BaseModel):
     url : str
     audio_file : UploadFile
