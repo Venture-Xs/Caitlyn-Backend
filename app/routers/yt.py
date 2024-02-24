@@ -31,7 +31,7 @@ def bot(url, is_query = False , query = "", generateTest = False) :
     if is_query :
         message = {
             "role": "user",
-            "content": f"Must return an array of JSON objects of the form: {{'reply': 'reply'}} The article is as follows: {transcript} the query about the article is :{str(query)}"
+            "content": f"Must return a reply of size 50 to 80 words : The article is as follows: {transcript} the query about the article is :{str(query)}"
         }
     elif generateTest:
         message = {
@@ -49,11 +49,11 @@ def bot(url, is_query = False , query = "", generateTest = False) :
             messages= messages,
             model="gpt-3.5-turbo",
         )
-
         reply = chat_completion.choices[0].message.content
-        reply.replace("\'","\"")
-        reply.replace("json","")
-        reply = json.loads(reply)
+        if not is_query:
+            reply.replace("\'","\"")
+            reply.replace("json","")
+            reply = json.loads(reply)
         print(reply)
         return reply
     except Exception as e:
