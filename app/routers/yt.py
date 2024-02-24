@@ -12,7 +12,7 @@ def bot(url, is_query = False , query = "", generateTest = False) :
     yt_obj = YouTube(url)
     yid = yt_obj.video_id
     try:
-        tx = YouTubeTranscriptApi.get_transcript(video_id=str(yid), languages=['en', 'ru', 'ml'])
+        tx = YouTubeTranscriptApi.get_transcript(video_id=str(yid), languages=['en', 'ru', 'ml','hi'])
         transcript = ""
         for i in tx:
             transcript += i['text']

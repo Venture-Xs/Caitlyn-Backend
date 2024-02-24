@@ -15,15 +15,15 @@ class Audio_bot_req(BaseModel):
 router = APIRouter()
 
 @router.post('/audio_bot', tags = ["audio_bot"])
-async def audio_bot(audio_bot_req : Audio_bot_req):
-    query = transcribe(audio_bot_req.audio_file)
-    reply = bot(url = audio_bot_req.url, is_query = True, query = query)
-    if(audio_bot_req.lang=="en"):
+async def audio_bot(url: str, audio_file: UploadFile, lang: str):
+    query = transcribe(audio_file)
+    reply = bot(url = url, is_query = True, query = query)
+    if(lang=="en"):
         tts_en(reply, "ttsen.mp3")
         with open("ttsen.mp3", "rb") as file:
             audio_data = file.read()
         return StreamingResponse(audio_data, media_type="audio/mpeg")
-    elif(audio_bot_req.lang=="ml"):
+    elif(lang=="ml"):
         tts_mal(reply,"ttsmal.mp3")
         with open("ttsmal.mp3", "rb") as file:
             audio_data = file.read()
