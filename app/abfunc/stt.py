@@ -19,7 +19,6 @@ def transcribe(audio_file):
     model="whisper-1", 
     file=audio_file,
       response_format="text",
-      stream=True,
     )
     return transcript
 

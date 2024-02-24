@@ -29,8 +29,7 @@ def tts_mal(prompt,outputPath):
     post_response = requests.post(url_post, json=new_data)
 
     # Print the response
-    response_data = post_response.json()
-    print(response_data)
+    response_data = post_response.json()    
 
     # Extract audio content from the response
     audio_content_base64 = response_data["audio"][0]["audioContent"]
