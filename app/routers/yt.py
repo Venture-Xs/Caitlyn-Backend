@@ -12,7 +12,21 @@ def bot(url, is_query = False , query = "", generateTest = False) :
     yt_obj = YouTube(url)
     yid = yt_obj.video_id
     try:
-        tx = YouTubeTranscriptApi.get_transcript(video_id=str(yid), languages=['en', 'ru', 'ml','hi'])
+        tx = YouTubeTranscriptApi.get_transcript(video_id=str(yid), languages=[
+    "af", "ak", "sq", "am", "ar", "hy", "as", "ay", "az", "bn",
+    "eu", "be", "bho", "bs", "bg", "my", "ca", "ceb", "zh-Hans", "zh-Hant",
+    "co", "hr", "cs", "da", "dv", "nl", "en", "eo", "et", "ee",
+    "fil", "fi", "fr", "gl", "lg", "ka", "de", "el", "gn", "gu",
+    "ht", "ha", "haw", "iw", "hi", "hmn", "hu", "is", "ig", "id",
+    "ga", "it", "ja", "jv", "kn", "kk", "km", "rw", "ko", "kri",
+    "ku", "ky", "lo", "la", "lv", "ln", "lt", "lb", "mk", "mg",
+    "ms", "ml", "mt", "mi", "mr", "mn", "ne", "nso", "no", "ny",
+    "or", "om", "ps", "fa", "pl", "pt", "pa", "qu", "ro", "ru",
+    "sm", "sa", "gd", "sr", "sn", "sd", "si", "sk", "sl", "so",
+    "st", "es", "su", "sw", "sv", "tg", "ta", "tt", "te", "th",
+    "ti", "ts", "tr", "tk", "uk", "ur", "ug", "uz", "vi", "cy",
+    "fy", "xh", "yi", "yo", "zu"
+])
         transcript = ""
         for i in tx:
             transcript += i['text']
